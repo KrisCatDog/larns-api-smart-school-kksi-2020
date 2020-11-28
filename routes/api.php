@@ -40,9 +40,9 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('announcements/{announcement}/announcement-comments', 'AnnouncementCommentController');
 
     // Discussion Question Module
-    Route::apiResource('classrooms/{classroom}/discussion-questions', 'DiscussionQuestionController');
-    Route::apiResource('discussion-questions/{discussionQuestion}/discussion-question-answers', 'DiscussionQuestionAnswerController');
-    Route::apiResource('discussion-question-answers/{discussionQuestionAnswer}/discussion-question-subanswers', 'DiscussionQuestionSubanswerController');
+    Route::apiResource('classrooms/{classroom}/questions', 'QuestionController');
+    Route::apiResource('questions/{question}/question-answers', 'QuestionAnswerController');
+    Route::apiResource('question-answers/{questionAnswer}/question-subanswers', 'QuestionSubanswerController');
 
     // Class Video Module
     Route::apiResource('classrooms/{classroom}/class-videos', 'ClassVideoController');
