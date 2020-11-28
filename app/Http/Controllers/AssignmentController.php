@@ -31,16 +31,14 @@ class AssignmentController extends Controller
      */
     public function store(Classroom $classroom, StoreAssignmentRequest $request)
     {
-        Assignment::create([
+        $assignment =  Assignment::create([
             'name' => $request->name,
             'description' => $request->description,
             'classroom_id' => $classroom->id,
-            'user_id' => 1
+            'user_id' => auth()->id()
         ]);
-        
-        return response([
-            'message' => 'assignment saved'
-        ], 200);
+
+        return new AssignmentResource($assignment);
     }
 
     /**
@@ -86,7 +84,7 @@ class AssignmentController extends Controller
     {
         // Assignment::where('classroom_id', $assignment->classroom_id)->delete();
         $classroom->assignments()->findOrFail($assignment->id)->delete();
-        
+
         return response([
             'message' => 'data deleted'
         ], 200);
