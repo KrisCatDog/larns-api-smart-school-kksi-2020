@@ -7,6 +7,7 @@ use App\Classroom;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Http\Resources\Attendance as AttendanceResource;
+use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -18,7 +19,7 @@ class AttendanceController extends Controller
      */
     public function index(Classroom $classroom)
     {
-        return AttendanceResource::collection($classroom->attendances);
+        return AttendanceResource::collection($classroom->attendances()->latest()->get());
     }
 
     /**
@@ -30,19 +31,10 @@ class AttendanceController extends Controller
      */
     public function store(Classroom $classroom, StoreAttendanceRequest $request)
     {
-
-        $request->validated();
-
-        Attendance::create([
-            'started_at' => $request->started_at,
-            'ended_at' => $request->ended_at,
-            'classroom_id' => $classroom->id,
-            'user_id' => 1
-        ]);
-        
-        return response([
-            'message' => 'data saved'
-        ], 200);
+        return new AttendanceResource($classroom->attendances()->create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()],
+        )));
     }
 
     /**
@@ -71,7 +63,7 @@ class AttendanceController extends Controller
             'started_at' => $request->started_at,
             'ended_at' => $request->ended_at
         ]);
-        
+
         return response([
             'message' => 'data updated'
         ], 200);
