@@ -20,7 +20,7 @@ class ClassVideo extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'attachment_video' => $this->attachment_video,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }

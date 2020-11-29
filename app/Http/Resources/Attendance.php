@@ -20,7 +20,7 @@ class Attendance extends JsonResource
             'user_id' => $this->user_id,
             'started_at' => $this->started_at,
             'ended_at' => $this->ended_at,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }
