@@ -27,16 +27,10 @@ class ClassroomController extends Controller
      */
     public function store(StoreClassroomRequest $request)
     {
-        Classroom::create([
-            'name' => $request->name,
-            'major' => $request->major,
-            'grade' => $request->grade,
-            'user_id' => 1
-        ]);
-        
-        return response([
-            'message' => 'data saved'
-        ], 200);
+        return new ClassroomResource(Classroom::create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        )));
     }
 
     /**
@@ -48,7 +42,7 @@ class ClassroomController extends Controller
     public function show(Classroom $classroom)
     {
         return new ClassroomResource($classroom);
-    }  
+    }
 
     /**
      * Update the specified resource in storage.
@@ -68,7 +62,6 @@ class ClassroomController extends Controller
         return response([
             'message' => 'data updated'
         ], 200);
-
     }
 
     /**
