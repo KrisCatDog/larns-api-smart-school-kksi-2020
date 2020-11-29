@@ -30,16 +30,10 @@ class AnnouncementController extends Controller
      */
     public function store(Classroom $classroom, StoreAnnoucementRequest $request)
     {
-        Announcement::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'classroom_id' => $classroom->id,
-            'user_id' => 1
-        ]);
-
-        return response([
-            'message' => 'assignment saved'
-        ], 200);
+        return new AnnouncementResource($classroom->announcements()->create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        )));
     }
 
     /**
