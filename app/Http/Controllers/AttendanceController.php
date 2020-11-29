@@ -46,7 +46,7 @@ class AttendanceController extends Controller
      */
     public function show(Classroom $classroom, Attendance $attendance)
     {
-        return new AttendanceResource($classroom->attendances()->findOrFail($attendance->id));
+        return new AttendanceResource($attendance);
     }
 
     /**
