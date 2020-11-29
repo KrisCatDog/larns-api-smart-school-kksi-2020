@@ -31,14 +31,10 @@ class AssignmentController extends Controller
      */
     public function store(Classroom $classroom, StoreAssignmentRequest $request)
     {
-        $assignment =  Assignment::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'classroom_id' => $classroom->id,
-            'user_id' => auth()->id()
-        ]);
-
-        return new AssignmentResource($assignment);
+        return new AssignmentResource($classroom->assignments()->create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        )));
     }
 
     /**
