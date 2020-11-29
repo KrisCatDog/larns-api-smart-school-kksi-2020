@@ -16,7 +16,7 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        return ClassroomResource::collection(Classroom::all());
+        return ClassroomResource::collection(auth()->user()->classrooms);
     }
 
     /**
