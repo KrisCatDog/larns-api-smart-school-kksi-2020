@@ -30,18 +30,10 @@ class AttendanceRespondController extends Controller
      */
     public function store(Attendance $attendance, StoreAttendanceRespondRequest $request)
     {
-
-        $request->validated();
-
-        AttendanceRespond::create([
-            'status' => $request->status,
-            'attendance_id' => $attendance->id,
-            'user_id' => 1
-        ]);
-
-        return response([
-            'message' => 'data saved'
-        ], 200);
+        return new AttendanceRespondResource($attendance->attendanceResponds()->create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        )));
     }
 
     /**
@@ -94,6 +86,5 @@ class AttendanceRespondController extends Controller
         return response([
             'message' => 'data deleted'
         ], 200);
-
     }
 }
