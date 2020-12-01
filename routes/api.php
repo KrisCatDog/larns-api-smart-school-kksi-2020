@@ -19,9 +19,8 @@ Route::post('register', 'Auth\AuthAPIController@register');
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Auth\AuthAPIController@logout');
 
-    Route::get('user', function () {
-        return request()->user();
-    });
+    Route::apiResource('users', 'UserController');
+    Route::get('user', 'UserController@authUser');
 
     // Classroom Module
     Route::apiResource('classrooms', 'ClassroomController');
