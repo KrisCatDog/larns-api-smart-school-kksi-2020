@@ -9,7 +9,7 @@ $factory->define(Attendance::class, function (Faker $faker) {
     return [
         'classroom_id' => factory(App\Classroom::class),
         'user_id' => factory(App\User::class),
-        'started_at' => '2026-11-19 09:33:43',
-        'ended_at' => '2030-11-19 09:33:43'
+        'started_at' => now()->format('H:i'),
+        'ended_at' => now()->format('H:i')
     ];
 });
