@@ -6,6 +6,7 @@ use App\Classroom;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
 use App\Http\Resources\Classroom as ClassroomResource;
+use Ramsey\Uuid\Uuid;
 
 class ClassroomController extends Controller
 {
@@ -29,7 +30,8 @@ class ClassroomController extends Controller
     {
         return new ClassroomResource(Classroom::create(array_merge(
             $request->validated(),
-            ['user_id' => auth()->id()]
+            ['user_id' => auth()->id()],
+            ['uuid' => Uuid::uuid4()]
         )));
     }
 
