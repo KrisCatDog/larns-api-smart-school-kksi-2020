@@ -45,8 +45,7 @@ class AnnouncementController extends Controller
      */
     public function show(Classroom $classroom, Announcement $announcement)
     {
-        // return new AnnouncementResource($announcement);
-        return new  AnnouncementResource($classroom->announcements()->findOrFail($announcement->id));
+        return new AnnouncementResource($announcement);
     }
 
     /**
