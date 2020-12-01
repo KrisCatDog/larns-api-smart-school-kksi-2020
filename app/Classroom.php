@@ -8,6 +8,11 @@ class Classroom extends Model
 {
     protected $guarded = [];
 
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
