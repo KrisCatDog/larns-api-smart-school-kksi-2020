@@ -18,6 +18,11 @@ class Classroom extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
     public function announcements()
     {
         return $this->hasMany(Announcement::class);
