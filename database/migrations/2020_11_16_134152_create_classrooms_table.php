@@ -16,6 +16,7 @@ class CreateClassroomsTable extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('uuid');
+            $table->string('join_code');
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('major');

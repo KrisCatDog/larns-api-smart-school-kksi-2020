@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+use App\Http\Requests\JoinClassRequest;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
 use App\Http\Resources\Classroom as ClassroomResource;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class ClassroomController extends Controller
 {
@@ -17,7 +19,11 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        return ClassroomResource::collection(auth()->user()->classrooms);
+        if (auth()->user()->role->name === "Teacher") {
+            return ClassroomResource::collection(auth()->user()->classrooms()->latest()->get());
+        }
+
+        return ClassroomResource::collection(auth()->user()->classroomsJoined()->orderBy('classroom_user.created_at')->get());
     }
 
     /**
@@ -30,8 +36,7 @@ class ClassroomController extends Controller
     {
         return new ClassroomResource(Classroom::create(array_merge(
             $request->validated(),
-            ['user_id' => auth()->id()],
-            ['uuid' => Uuid::uuid4()]
+            ['user_id' => auth()->id(), 'uuid' => Uuid::uuid4(), 'join_code' => Str::random(6)],
         )));
     }
 
@@ -79,5 +84,16 @@ class ClassroomController extends Controller
         return response([
             'message' => 'data deleted'
         ], 200);
+    }
+
+    public function joinClass(JoinClassRequest $request)
+    {
+        $data = $request->validated();
+
+        $classroom = Classroom::where('join_code', $data['join_code'])->firstOrFail();
+
+        $classroom->members()->attach(auth()->user());
+
+        return new ClassroomResource($classroom);
     }
 }
