@@ -14,6 +14,14 @@ class AssignmentResult extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user' => new User($this->user),
+            'attachment_file' => $this->attachment_file,
+            'file_name' => explode('/', $this->attachment_file)[6],
+            'score' => $this->score,
+            'created_at' => $this->created_at->toFormattedDateString(),
+            'updated_at' => $this->updated_at,
+        ];
     }
 }
