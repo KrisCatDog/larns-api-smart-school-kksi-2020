@@ -18,7 +18,7 @@ class ClassVideoController extends Controller
      */
     public function index(Classroom $classroom)
     {
-        return ClassVideoResource::collection($classroom->classVideos);
+        return ClassVideoResource::collection($classroom->classVideos()->latest()->get());
     }
 
     /**
@@ -33,9 +33,8 @@ class ClassVideoController extends Controller
         ClassVideo::create([
             'title' => $request->title,
             'description' => $request->description,
-            'attachment_video' => $request->attachment_video,
+            'attachment_video' => $request->attachment_video->store('uploads/attachments', 'public'),
             'classroom_id' => $classroom->id,
-
         ]);
 
         return response([
@@ -52,7 +51,7 @@ class ClassVideoController extends Controller
      */
     public function show(Classroom $classroom, ClassVideo $classVideo)
     {
-        return new ClassVideoResource($classroom->classVideos()->findOrFail($classVideo->id));    
+        return new ClassVideoResource($classroom->classVideos()->findOrFail($classVideo->id));
     }
 
     /**
@@ -68,9 +67,9 @@ class ClassVideoController extends Controller
         $classVideo->update([
             'title' => $request->title,
             'description' => $request->description,
-            'attachment_video' => $request->attachment_video        
+            'attachment_video' => $request->attachment_video
         ]);
-        
+
         return response([
             'message' => 'data updated'
         ], 200);
