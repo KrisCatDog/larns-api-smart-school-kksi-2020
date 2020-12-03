@@ -25,7 +25,7 @@ class StoreAssignmentResultRequest extends FormRequest
     {
         return [
             'attachment_file' => 'required',
-            'score' => 'required'
+            'score' => 'sometimes'
         ];
     }
 }
