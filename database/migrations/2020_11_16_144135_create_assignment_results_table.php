@@ -18,7 +18,7 @@ class CreateAssignmentResultsTable extends Migration
             $table->unsignedBigInteger('assignment_id');
             $table->unsignedBigInteger('user_id');
             $table->string('attachment_file');
-            $table->unsignedInteger('score');
+            $table->unsignedInteger('score')->nullable();
             $table->timestamps();
 
             $table->foreign('assignment_id')->references('id')->on('assignments')->onDelete('cascade');
