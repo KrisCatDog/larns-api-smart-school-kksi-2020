@@ -38,9 +38,9 @@ class Classroom extends Model
         return $this->hasMany(Attendance::class);
     }
 
-    public function discussionQuestions()
+    public function questions()
     {
-        return $this->hasMany(DiscussionQuestion::class);
+        return $this->hasMany(Question::class);
     }
 
     public function classVideos()
