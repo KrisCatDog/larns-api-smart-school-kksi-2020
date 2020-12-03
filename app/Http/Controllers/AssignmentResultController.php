@@ -31,12 +31,12 @@ class AssignmentResultController extends Controller
     public function store(Assignment $assignment, StoreAssignmentResultRequest $request)
     {
         AssignmentResult::create([
-            'attachment_file' => $request->attachment_file,
+            'attachment_file' => $request->attachment_file->store('uploads/attachments', 'public'),
             'score' => $request->score,
             'assignment_id' => $assignment->id,
-            'user_id' => 1
+            'user_id' => auth()->id()
         ]);
-        
+
         return response([
             'message' => 'assignment saved'
         ], 200);
@@ -51,7 +51,7 @@ class AssignmentResultController extends Controller
      */
     public function show(Assignment $assignment, AssignmentResult $assignmentResult)
     {
-        return new AssignmentResultResource($assignment->assignmentResults()->findOrFail($assignmentResult->id));
+        return new AssignmentResultResource($assignmentResult);
     }
 
     /**
@@ -64,14 +64,9 @@ class AssignmentResultController extends Controller
      */
     public function update(Assignment $assignment, UpdateAssignmentResultRequest $request, AssignmentResult $assignmentResult)
     {
-        $assignmentResult->update([
-            'attachment_file' => $request->attachment_file,
-            'score' => $request->score
-        ]);
+        $assignmentResult->update($request->validated());
 
-        return response([
-            'message' => 'data updated'
-        ], 200);
+        return new AssignmentResultResource($assignmentResult);
     }
 
     /**

@@ -20,7 +20,7 @@ class AssignmentResult extends JsonResource
             'attachment_file' => $this->attachment_file,
             'file_name' => explode('/', $this->attachment_file)[6],
             'score' => $this->score,
-            'created_at' => $this->created_at->toFormattedDateString(),
+            'created_at' => $this->created_at->toDayDateTimeString(),
             'updated_at' => $this->updated_at,
         ];
     }

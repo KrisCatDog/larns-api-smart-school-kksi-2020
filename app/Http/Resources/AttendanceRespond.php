@@ -17,9 +17,9 @@ class AttendanceRespond extends JsonResource
         return [
             'id' => $this->id,
             'attendance_id' => $this->attendance_id,
-            'user_id' => $this->user_id,
+            'user' => new User($this->user),
             'status' => $this->status,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toDayDateTimeString(),
             'updated_at' => $this->updated_at
         ];
     }
