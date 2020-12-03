@@ -24,7 +24,7 @@ class UpdateAssignmentResultRequest extends FormRequest
     public function rules()
     {
         return [
-            'attachment_file' => 'required',
+            'attachment_file' => 'sometimes',
             'score' => 'required|numeric'
         ];
     }
