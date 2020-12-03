@@ -22,6 +22,7 @@ class Classroom extends JsonResource
             'name' => $this->name,
             'major' => $this->major,
             'grade' => $this->grade,
+            'members' => User::collection($this->members),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
