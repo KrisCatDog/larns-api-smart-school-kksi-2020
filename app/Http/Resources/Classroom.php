@@ -17,6 +17,7 @@ class Classroom extends JsonResource
         return [
             'id' => $this->id,
             'uuid' => $this->uuid,
+            'join_code' => $this->join_code,
             'user' => new User($this->user),
             'name' => $this->name,
             'major' => $this->major,
