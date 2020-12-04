@@ -30,16 +30,10 @@ class ClassVideoController extends Controller
      */
     public function store(Classroom $classroom, StoreClassVideoRequest $request)
     {
-        ClassVideo::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'attachment_video' => $request->attachment_video->store('uploads/attachments', 'public'),
-            'classroom_id' => $classroom->id,
-        ]);
-
-        return response([
-            'message' => 'data saved'
-        ], 200);
+        return new ClassVideoResource($classroom->classVideos()->create(array_merge(
+            $request->validated(),
+            ['attachment_video' => $request->attachment_video->store('uploads/attachments', 'public')]
+        )));
     }
 
     /**
@@ -51,7 +45,7 @@ class ClassVideoController extends Controller
      */
     public function show(Classroom $classroom, ClassVideo $classVideo)
     {
-        return new ClassVideoResource($classroom->classVideos()->findOrFail($classVideo->id));
+        return new ClassVideoResource($classVideo);
     }
 
     /**
