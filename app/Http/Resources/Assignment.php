@@ -20,6 +20,7 @@ class Assignment extends JsonResource
             'user_id' => $this->user_id,
             'name' => $this->name,
             'description' => $this->description,
+            'assignment_results' => AssignmentResult::collection($this->assignmentResults),
             'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at,
         ];
