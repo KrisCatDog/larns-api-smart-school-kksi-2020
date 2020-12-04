@@ -26,7 +26,7 @@ class StoreClassVideoRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'attachment_video' => 'required',
+            'attachment_video' => 'required|mimes:mp4,mkv',
         ];
     }
 }
