@@ -25,4 +25,9 @@ class ClassVideo extends Model
 
         return parent::delete();
     }
+
+    public function getAttachmentVideoAttribute($attachmentVideo)
+    {
+        return asset('storage/' . $attachmentVideo);
+    }
 }
