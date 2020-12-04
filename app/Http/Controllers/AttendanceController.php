@@ -59,14 +59,9 @@ class AttendanceController extends Controller
      */
     public function update(Classroom $classroom, UpdateAttendanceRequest $request, Attendance $attendance)
     {
-        $attendance->update([
-            'started_at' => $request->started_at,
-            'ended_at' => $request->ended_at
-        ]);
+        $attendance->update($request->validated());
 
-        return response([
-            'message' => 'data updated'
-        ], 200);
+        return new AttendanceResource($attendance);
     }
 
     /**

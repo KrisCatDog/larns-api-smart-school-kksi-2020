@@ -60,15 +60,9 @@ class ClassroomController extends Controller
      */
     public function update(UpdateClassroomRequest $request, Classroom $classroom)
     {
-        $classroom->update([
-            'name' => $request->name,
-            'major' => $request->major,
-            'grade' => $request->grade
-        ]);
+        $classroom->update($request->validated());
 
-        return response([
-            'message' => 'data updated'
-        ], 200);
+        return new ClassroomResource($classroom);
     }
 
     /**
