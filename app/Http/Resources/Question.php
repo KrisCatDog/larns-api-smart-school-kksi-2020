@@ -20,6 +20,7 @@ class Question extends JsonResource
             'user_id' => $this->user_id,
             'title' => $this->title,
             'description' => $this->description,
+            'question_answers' => QuestionAnswer::collection($this->questionAnswers),
             'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
