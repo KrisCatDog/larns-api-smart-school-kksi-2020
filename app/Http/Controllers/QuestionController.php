@@ -30,17 +30,10 @@ class QuestionController extends Controller
      */
     public function store(Classroom $classroom, StoreQuestionRequest $request)
     {
-
-        Question::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'classroom_id' => $classroom->id,
-            'user_id' => 1,
-        ]);
-
-        return response([
-            'message' => 'data saved'
-        ], 200);
+        return new QuestionResource($classroom->questions()->create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        )));
     }
 
     /**
@@ -65,14 +58,9 @@ class QuestionController extends Controller
      */
     public function update(Classroom $classroom, UpdateQuestionRequest $request, Question $question)
     {
-        $question->update([
-            'title' => $request->title,
-            'description' => $request->description
-        ]);
+        $question->update($request->validated());
 
-        return response([
-            'message' => 'data updated'
-        ], 200);
+        return new QuestionResource($question);
     }
 
     /**
