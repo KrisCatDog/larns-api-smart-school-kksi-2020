@@ -70,15 +70,9 @@ class ClassVideoController extends Controller
      */
     public function update(Classroom $classroom, UpdateClassVideoRequest $request, ClassVideo $classVideo)
     {
-        $classVideo->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'attachment_video' => $request->attachment_video
-        ]);
+        $classVideo->update($request->validated());
 
-        return response([
-            'message' => 'data updated'
-        ], 200);
+        return new ClassVideoResource($classVideo);
     }
 
     /**
