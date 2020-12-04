@@ -58,14 +58,9 @@ class AnnouncementController extends Controller
      */
     public function update(Classroom $classroom, UpdateAnnoucementRequest $request, Announcement $announcement)
     {
-        $announcement->update([
-            'title' => $request->title,
-            'description' => $request->description
-        ]);
+        $announcement->update($request->validated());
 
-        return response([
-            'message' => 'assignment updated'
-        ], 200);
+        return new AnnouncementResource($announcement);
     }
 
     /**
@@ -77,7 +72,6 @@ class AnnouncementController extends Controller
      */
     public function destroy(Classroom $classroom, Announcement $announcement)
     {
-        // $announcement->delete();
         $classroom->announcements()->findOrFail($announcement->id)->delete();
 
         return response([
