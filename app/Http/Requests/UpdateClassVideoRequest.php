@@ -26,7 +26,6 @@ class UpdateClassVideoRequest extends FormRequest
         return [
             'title' => 'required',
             'description' => 'required',
-            'attachment_video' => 'required',
         ];
     }
 }
