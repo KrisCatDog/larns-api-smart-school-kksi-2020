@@ -30,15 +30,10 @@ class QuestionAnswerController extends Controller
      */
     public function store(Question $question, StoreQuestionAnswerRequest $request)
     {
-        QuestionAnswer::create([
-            'question_id' => $question->id,
-            'answer' => $request->answer,
-            'user_id' => 1
-        ]);
-
-        return response([
-            'message' => 'data saved'
-        ], 200);
+        return new QuestionAnswerResource($question->questionAnswers()->create(array_merge(
+            $request->validated(),
+            ['user_id' => auth()->id()]
+        )));
     }
 
     /**
