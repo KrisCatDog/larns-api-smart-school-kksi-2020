@@ -30,8 +30,14 @@ class AttendanceRespondController extends Controller
      */
     public function store(Attendance $attendance, StoreAttendanceRespondRequest $request)
     {
+        $data = $request->validated();
+
+        if (now() > $attendance->ended_at) {
+            $data['status'] = 'late';
+        }
+
         return new AttendanceRespondResource($attendance->attendanceResponds()->create(array_merge(
-            $request->validated(),
+            $data,
             ['user_id' => auth()->id()]
         )));
     }
