@@ -7,6 +7,8 @@ use App\ClassVideo;
 use App\Http\Requests\StoreClassVideoRequest;
 use App\Http\Requests\UpdateClassVideoRequest;
 use App\Http\Resources\ClassVideo as ClassVideoResource;
+use App\Mail\NewVideoMail;
+use Illuminate\Support\Facades\Mail;
 
 class ClassVideoController extends Controller
 {
@@ -30,10 +32,20 @@ class ClassVideoController extends Controller
      */
     public function store(Classroom $classroom, StoreClassVideoRequest $request)
     {
-        return new ClassVideoResource($classroom->classVideos()->create(array_merge(
+        $classVideo = $classroom->classVideos()->create(array_merge(
             $request->validated(),
             ['attachment_video' => $request->attachment_video->store('uploads/attachments', 'public')]
-        )));
+        ));
+
+        foreach ($classroom->members as $member) {
+            Mail::to($member->email)->send(new NewVideoMail(
+                $classVideo->title,
+                $member->name,
+                $classroom
+            ));
+        }
+
+        return new ClassVideoResource($classVideo);
     }
 
     /**

@@ -7,6 +7,8 @@ use App\Classroom;
 use App\Http\Requests\StoreAnnoucementRequest;
 use App\Http\Requests\UpdateAnnoucementRequest;
 use App\Http\Resources\Announcement as AnnouncementResource;
+use App\Mail\NewAnnouncementMail;
+use Illuminate\Support\Facades\Mail;
 
 class AnnouncementController extends Controller
 {
@@ -30,10 +32,20 @@ class AnnouncementController extends Controller
      */
     public function store(Classroom $classroom, StoreAnnoucementRequest $request)
     {
-        return new AnnouncementResource($classroom->announcements()->create(array_merge(
+        $announcement = $classroom->announcements()->create(array_merge(
             $request->validated(),
             ['user_id' => auth()->id()]
-        )));
+        ));
+
+        foreach ($classroom->members as $member) {
+            Mail::to($member->email)->send(new NewAnnouncementMail(
+                $announcement->title,
+                $member->name,
+                $classroom
+            ));
+        }
+
+        return new AnnouncementResource($announcement);
     }
 
     /**

@@ -7,7 +7,9 @@ use App\Classroom;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Http\Resources\Attendance as AttendanceResource;
+use App\Mail\NewAttendanceMail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class AttendanceController extends Controller
 {
@@ -31,10 +33,20 @@ class AttendanceController extends Controller
      */
     public function store(Classroom $classroom, StoreAttendanceRequest $request)
     {
-        return new AttendanceResource($classroom->attendances()->create(array_merge(
+        $attendance =  $classroom->attendances()->create(array_merge(
             $request->validated(),
             ['user_id' => auth()->id()],
-        )));
+        ));
+
+        foreach ($classroom->members as $member) {
+            Mail::to($member->email)->send(new NewAttendanceMail(
+                $attendance->created_at->toFormattedDateString(),
+                $member->name,
+                $classroom
+            ));
+        }
+
+        return new AttendanceResource($attendance);
     }
 
     /**
