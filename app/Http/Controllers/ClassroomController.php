@@ -90,4 +90,13 @@ class ClassroomController extends Controller
 
         return new ClassroomResource($classroom);
     }
+
+    public function leaveClass(Classroom $classroom)
+    {
+        $classroom->members()->detach(auth()->user());
+
+        return response([
+            'message' => 'success'
+        ], 200);
+    }
 }
