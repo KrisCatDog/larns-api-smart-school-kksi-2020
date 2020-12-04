@@ -16,18 +16,18 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name' => 'Teacher',
             'role_id' => 1,
-            'email' => 'teacher@teacher.com',
+            'email' => 'teacher@larns.edu',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('larns13'),
             'remember_token' => Str::random(10),
         ]);
 
         User::create([
             'name' => 'Student',
             'role_id' => 2,
-            'email' => 'student@student.com',
+            'email' => 'student@larns.edu',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('larns13'),
             'remember_token' => Str::random(10),
         ]);
     }
