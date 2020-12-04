@@ -59,14 +59,9 @@ class AssignmentController extends Controller
      */
     public function update(Classroom $classroom, UpdateAssignmentRequest $request, Assignment $assignment)
     {
-        $assignment->update([
-            'name' => $request->name,
-            'description' => $request->description
-        ]);
+        $assignment->update($request->validated());
 
-        return response([
-            'message' => 'data updated'
-        ], 200);
+        return new AssignmentResource($assignment);
     }
 
     /**
@@ -78,7 +73,6 @@ class AssignmentController extends Controller
      */
     public function destroy(Classroom $classroom, Assignment $assignment)
     {
-        // Assignment::where('classroom_id', $assignment->classroom_id)->delete();
         $classroom->assignments()->findOrFail($assignment->id)->delete();
 
         return response([
