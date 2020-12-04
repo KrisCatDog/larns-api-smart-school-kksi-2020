@@ -19,7 +19,7 @@ class AnnouncementComment extends JsonResource
             'announcement_id' => $this->announcement_id,
             'user_id' => $this->user_id,
             'comment' => $this->comment,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
 
         ];

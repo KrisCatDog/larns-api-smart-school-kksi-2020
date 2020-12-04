@@ -13,7 +13,7 @@ class ExamResult extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {         
+    {
         return [
             'id' => $this->id,
             'exam_id' => $this->exam_id,
@@ -21,7 +21,7 @@ class ExamResult extends JsonResource
             'total_true_answer' => $this->total_true_answer,
             'total_wrong_answer' => $this->total_wrong_answer,
             'score' => $this->score,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }

@@ -19,7 +19,7 @@ class QuestionAnswer extends JsonResource
             'question_id' => $this->question_id,
             'user' => new User($this->user),
             'answer' => $this->answer,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }

@@ -19,7 +19,7 @@ class ExamQuestion extends JsonResource
             'exam_id' => $this->exam_id,
             'question' => $this->question,
             'true_answer' => $this->true_answer,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }

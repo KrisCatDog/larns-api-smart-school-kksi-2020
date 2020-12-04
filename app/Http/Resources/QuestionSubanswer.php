@@ -19,7 +19,7 @@ class QuestionSubanswer extends JsonResource
             'question_answer_id' => $this->question_answer_id,
             'user_id' => $this->id,
             'subanswer' => $this->subanswer,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }

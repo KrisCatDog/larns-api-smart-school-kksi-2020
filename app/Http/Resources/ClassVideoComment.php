@@ -19,7 +19,7 @@ class ClassVideoComment extends JsonResource
             'user_id' => $this->user_id,
             'class_video_id' => $this->class_video_id,
             'comment' => $this->comment,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }

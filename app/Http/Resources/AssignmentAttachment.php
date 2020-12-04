@@ -18,7 +18,7 @@ class AssignmentAttachment extends JsonResource
             'id' => $this->id,
             'assignment_id' => $this->assignment_id,
             'attachment_file' => $this->attachment_file,
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }

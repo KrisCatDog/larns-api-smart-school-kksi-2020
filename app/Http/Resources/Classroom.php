@@ -23,7 +23,7 @@ class Classroom extends JsonResource
             'major' => $this->major,
             'grade' => $this->grade,
             'members' => User::collection($this->members),
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at
         ];
     }
