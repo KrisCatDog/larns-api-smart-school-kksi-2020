@@ -17,8 +17,8 @@ class CreateAttendancesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('classroom_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('started_at');
-            $table->timestamp('ended_at');
+            $table->timestamp('started_at')->nullable()->default(null);
+            $table->timestamp('ended_at')->nullable()->default(null);
             $table->timestamps();
 
             $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
